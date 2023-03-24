@@ -48,7 +48,7 @@ const CardsContainer = () => {
             {!pokemons.length && <div><img src={Charizard}></img> <img src={Loading}></img></div>}
 
             <div className={style.container}> 
-                {Array.isArray(currentPokemons) && currentPokemons?.map(poke =>{ 
+                {currentPokemons?.map(poke =>{ 
 
                     return <Card
                     key={poke.id}  

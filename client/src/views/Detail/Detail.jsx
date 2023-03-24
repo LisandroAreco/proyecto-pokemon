@@ -11,8 +11,11 @@ const Detail = () => {
     useEffect( ()  => {
         //dispatch(getTypes())
         dispatch(getPokemon(id))
+        return () =>{
+            // aca vieneel dispatch de la action para borrar
+        }
     },[id])
-    const pokemon = useSelector(state => state.pokemons)
+    const pokemon = useSelector(state => state.details)
 
 
 

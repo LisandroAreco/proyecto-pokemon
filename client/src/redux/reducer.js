@@ -1,6 +1,7 @@
 import { GET_POKEMONS,GET_POKEMON, GET_TYPES } from "./actions"
 let initialState = {
     pokemons: [],
+    details: [],
     types: []
 }
 
@@ -10,7 +11,7 @@ const rootReducer = (state = initialState , action) => {
         case GET_POKEMONS:
             return {...state, pokemons: action.payload}
         case GET_POKEMON:
-            return {...state, pokemons: action.payload}
+            return {...state, details: action.payload}
         case GET_TYPES:
             return {...state, types: action.payload}
         default:
