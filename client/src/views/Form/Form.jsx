@@ -46,6 +46,12 @@ const Form = () => {
         validate({...form, [targetProp]: valueProp})
         setForm({...form, [targetProp]: valueProp})
     }
+    const changeHandlerTipo = (event) =>{
+        const valueProp = event.target.value
+        if(form.tipo.includes(valueProp)) return   
+        else {setForm({...form, tipo: [...form.tipo, valueProp]})}
+        validate({...form, tipo: [...form.tipo, valueProp]})
+    }
 
     const validate = (form) => {
         if(/^(?=.{1,15}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/.test(form.nombre) ){
@@ -60,11 +66,7 @@ const Form = () => {
             setErrors({...errors, nombre: "Nombre vacio"})
         }
     }
-        const logg = () =>{
-            console.log(tipos);
-        }
-        logg()
-    
+
     // divido al objeto en pares propiedad/valor y lo recorro eliminando las propiedades sin valor
 
     const formToSend = Object.entries(form).reduce((acc, [key, value]) => {
@@ -76,7 +78,6 @@ const Form = () => {
 
     const submitHandler = async (event) => {
         event.preventDefault()
-        console.log(form);
         await axios.post(`http://localhost:3001/pokemons`, formToSend)
         .then(res => alert(res))
         .catch(error => alert(error))
@@ -91,8 +92,12 @@ const Form = () => {
                 <p>Los campos Nombre, Tipo, Vida, Ataque y Defensa son obligatorios</p>
             </div>
      )
-    
+
     }
+
+    const closeType = (tipo) => {
+         setForm({...form, tipo: form.tipo.filter(type => type !== tipo)})
+     }
      return(
         <form onSubmit= {submitHandler}>
             <div>
@@ -102,10 +107,10 @@ const Form = () => {
             </div>
             <div>
                 <label>tipo</label>
-                <select id="options" value={form.tipo} onChange={changeHandler}name="tipo">
-                    <option value="">Selecciona una opción</option>
+                <select id="options" value={form.tipo} onChange={changeHandlerTipo}name="tipo">
+                    <option value="">Selecciona una tipo</option>
                    {tipos.map(tipo => {
-                    return (<option value={tipo.nombre}>{tipo.nombre}</option>)
+                    return (<option key={tipo.nombre} value={tipo.nombre}>{tipo.nombre}</option>)
                    })} 
                  
                 </select>                
@@ -148,6 +153,15 @@ const Form = () => {
                 <label>peso</label>
                 <input type="number" value={form.peso} onChange={changeHandler}name="peso"/>
             </div>
+
+            {form.tipo.length && form.tipo.map(tipo => {
+                return(
+                    <div key={tipo}>
+                        <button onClick={() => closeType(tipo)}>X</button>
+                        <h3>{tipo}</h3>
+                    </div>
+                )
+            })}
             
             {form.nombre && form.tipo && form.vida && form.ataque && form.defensa
             ? <button type="submit" disabled={false}>Enviar</button> 

@@ -63,31 +63,35 @@ const CardsContainer = () => {
                     paginado = {paginado}
                 />
             </div>
-
+            
             {!pokemons.length && <div><img src={Charizard} alt={"charizard"}/> <img src={Loading} alt={"charizard"}/></div>}
 
+            {(typeof pokemons[0] === "string")
+            ? <h1>No se encontraron pokemons</h1>
+            : 
             <div className={style.container}> 
-                {currentPokemons?.map(poke =>{ 
+            {currentPokemons?.map(poke =>{ 
 
-                    return (
-                    <Link  key={poke.id} to={`/detail/${poke.id}`}> 
-                        <Card
-                        key={poke.id}  
-                        id={poke.id}
-                        nombre={poke.nombre}
-                        imagen={poke.imagen}
-                        vida={poke.vida}
-                        ataque={poke.ataque}
-                        defensa={poke.defensa}
-                        velocidad={poke.velocidad}
-                        altura={poke.altura}
-                        peso={poke.peso}
-                        tipo={poke.tipo/* .toString() */}
-                        created={poke.created}  
-                        />
-                    </Link>)
-                })}
+                return (
+                <Link  key={poke.id} to={`/detail/${poke.id}`}> 
+                    <Card
+                    key={poke.id}  
+                    id={poke.id}
+                    nombre={poke.nombre}
+                    imagen={poke.imagen}
+                    vida={poke.vida}
+                    ataque={poke.ataque}
+                    defensa={poke.defensa}
+                    velocidad={poke.velocidad}
+                    altura={poke.altura}
+                    peso={poke.peso}
+                    tipo={poke.tipo/* .toString() */}
+                    created={poke.created}  
+                    />
+                </Link>)
+            })}
             </div>
+            }
         </div>
     )
 }

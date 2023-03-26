@@ -1,4 +1,4 @@
-import { GET_POKEMONS,GET_POKEMON, GET_TYPES, CLEAR_DETAIL, GET_POKEMON_BY_NAME, FILTER_BY_TYPE, FILTER_BY_CREATED } from "./actions"
+import { GET_POKEMONS,GET_POKEMON, GET_TYPES, CLEAR_DETAIL, GET_POKEMON_BY_NAME, FILTER_BY_TYPE, FILTER_BY_CREATED, filterByType } from "./actions"
 let initialState = {
     pokemons: [],
     allPokemons: [],
@@ -22,11 +22,10 @@ const rootReducer = (state = initialState , action) => {
         case CLEAR_DETAIL: 
             return {...state, details: action.payload}
         case FILTER_BY_TYPE:
-            const filteredByType = action.payload === "todos"? allPokemons : allPokemons.filter(poke => poke.tipo.includes(action.payload))
-            return {...state, pokemons: filteredByType}
+            let filteredByType = action.payload === "todos"? allPokemons : allPokemons.filter(poke => poke.tipo.includes(action.payload))
+             !filteredByType.length && (filteredByType =   ["no hay pokemones de ese tipo"] ) 
+            return {...state, pokemons: filteredByType}     
         case FILTER_BY_CREATED:
-            console.log(action.payload);
-            console.log(allPokemons)
             const filterByCreated = action.payload === "todos"? allPokemons : allPokemons.filter(poke => poke.created === action.payload)
             return{...state, pokemons: filterByCreated}
         default:
