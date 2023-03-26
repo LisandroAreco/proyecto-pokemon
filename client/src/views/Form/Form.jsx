@@ -1,8 +1,16 @@
-import { useState } from "react"
 import axios from 'axios'
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { getTypes } from '../../redux/actions'
+
 
 const Form = () => {
-
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        dispatch(getTypes())
+    },[dispatch])
+    const tipos = useSelector(state=> state.types)
     const [form, setForm] = useState({
         nombre: "",
         imagen: "",
@@ -52,9 +60,12 @@ const Form = () => {
             setErrors({...errors, nombre: "Nombre vacio"})
         }
     }
-        
+        const logg = () =>{
+            console.log(tipos);
+        }
+        logg()
     
-    // prueba
+    // divido al objeto en pares propiedad/valor y lo recorro eliminando las propiedades sin valor
 
     const formToSend = Object.entries(form).reduce((acc, [key, value]) => {
         if (value !== "") {
@@ -66,7 +77,7 @@ const Form = () => {
     const submitHandler = async (event) => {
         event.preventDefault()
         console.log(form);
-        const response = await axios.post(`http://localhost:3001/pokemons`, formToSend)
+        await axios.post(`http://localhost:3001/pokemons`, formToSend)
         .then(res => alert(res))
         .catch(error => alert(error))
 
@@ -91,7 +102,14 @@ const Form = () => {
             </div>
             <div>
                 <label>tipo</label>
-                <input type="text" value={form.tipo} onChange={changeHandler}name="tipo"/>
+                <select id="options" value={form.tipo} onChange={changeHandler}name="tipo">
+                    <option value="">Selecciona una opción</option>
+                   {tipos.map(tipo => {
+                    return (<option value={tipo.nombre}>{tipo.nombre}</option>)
+                   })} 
+                 
+                </select>                
+                {/* <input type="text" value={form.tipo} onChange={changeHandler}name="tipo"/> */}
                 {errors.tipo && <span>{errors.tipo}</span> } 
             </div>
 

@@ -1,20 +1,20 @@
-import axios from "axios"
 import { useEffect} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-import { getPokemon, getTypes } from "../../redux/actions"
+import { getPokemon, getTypes, clearDetail } from "../../redux/actions"
 
 const Detail = () => {
     const {id} =  useParams()
     const dispatch = useDispatch()
 
     useEffect( ()  => {
-        //dispatch(getTypes())
+        dispatch(getTypes())
         dispatch(getPokemon(id))
+       
         return () =>{
-            // aca vieneel dispatch de la action para borrar
+            dispatch(clearDetail)
         }
-    },[id])
+    },[dispatch, id])
     const pokemon = useSelector(state => state.details)
 
 
@@ -31,9 +31,7 @@ const Detail = () => {
             {pokemon.velocidad && <p>velocidad: {pokemon.velocidad}</p>}
             {pokemon.altura && <p>altura: {pokemon.altura}</p>}
             {pokemon.peso && <p>peso: {pokemon.peso}</p>}
-            {/* <p>tipo: {pokemon.tipo.map(tipo => {
-                    return  tipo
-                })}</p> */}
+            {<p>tipo {pokemon.tipo}</p> }
         </div>
     )
 

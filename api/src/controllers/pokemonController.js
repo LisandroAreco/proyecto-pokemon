@@ -37,7 +37,7 @@ const getAllApiPokemons = async () => {
                 altura: poke.data.height,
                 peso: poke.data.weight,
                 tipo: poke.data.types.map(ty => ty.type.name),
-                created: false
+                created: "false"
             })
         })
         return pokemons
