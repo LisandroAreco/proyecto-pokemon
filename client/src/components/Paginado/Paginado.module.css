@@ -1,0 +1,20 @@
+.container_list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+.container_list li button{
+    border: 0;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.container_list li button:hover{
+    background: #ffcd05;
+    scale: 1.1;
+
+}

@@ -1,8 +1,18 @@
 .container{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    border: 1px solid black
+    justify-content:space-between;
+    background: linear-gradient(to bottom, #F05D59 95%, #41A2F0 ) ;
+    padding: 2px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    
+}
+.image {
+    height: 4em;
+   
+}
+.form {
+    height: 4em;
 }

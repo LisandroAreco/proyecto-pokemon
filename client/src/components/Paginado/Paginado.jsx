@@ -1,3 +1,4 @@
+import style from "./Paginado.module.css"
 const Paginado = ({pokemonsPerPage, pokemons, paginado}) => {
     let pageNumbers = []
 
@@ -8,7 +9,7 @@ const Paginado = ({pokemonsPerPage, pokemons, paginado}) => {
     return(
        
         <nav>
-            <ul>
+            <ul className={style.container_list}>
                 {pageNumbers && pageNumbers.map(page =>( 
                      <li key = {page}> 
                         <button onClick={() => paginado(page)}>{page }</button> 

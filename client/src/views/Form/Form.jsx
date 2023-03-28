@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getTypes } from '../../redux/actions'
+import { getTypes, resetPokemons } from '../../redux/actions'
+import validate from "./validations"
 
 
 const Form = () => {
@@ -11,6 +12,7 @@ const Form = () => {
         dispatch(getTypes())
     },[dispatch])
     const tipos = useSelector(state=> state.types)
+
     const [form, setForm] = useState({
         nombre: "",
         imagen: "",
@@ -25,48 +27,23 @@ const Form = () => {
         // botón para crear el nuevo pokemon.
     })
 
-    const [errors, setErrors] = useState({
-        nombre: "",
-        imagen: "",
-        vida: "",
-        ataque: "",
-        defensa: "",
-        velocidad: "",
-        altura: "",
-        peso: "",
-        tipo:""
-     
-    })
+    const [errors, setErrors] = useState( {} )
 
     const changeHandler = (event) =>{
         const targetProp = event.target.name
         const valueProp = event.target.value
 
-
-        validate({...form, [targetProp]: valueProp})
+        // validate({...form, [targetProp]: valueProp})
+        setErrors(validate({...form, [targetProp]: valueProp}))
         setForm({...form, [targetProp]: valueProp})
     }
     const changeHandlerTipo = (event) =>{
         const valueProp = event.target.value
         if(form.tipo.includes(valueProp)) return   
-        else {setForm({...form, tipo: [...form.tipo, valueProp]})}
-        validate({...form, tipo: [...form.tipo, valueProp]})
+        else {validate({...form, tipo: [...form.tipo, valueProp]})
+            setForm({...form, tipo: [...form.tipo, valueProp]})}
     }
-
-    const validate = (form) => {
-        if(/^(?=.{1,15}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/.test(form.nombre) ){
-            setErrors({...errors, nombre: ""})
-            
-        }
-        else{
-            setErrors({...errors, nombre: "El nombre debe ser una palabra y sólo contener letras de la A la Z"}) 
-
-        }
-        if(!form.nombre.length) {
-            setErrors({...errors, nombre: "Nombre vacio"})
-        }
-    }
-
+    
     // divido al objeto en pares propiedad/valor y lo recorro eliminando las propiedades sin valor
 
     const formToSend = Object.entries(form).reduce((acc, [key, value]) => {
@@ -81,7 +58,7 @@ const Form = () => {
         await axios.post(`http://localhost:3001/pokemons`, formToSend)
         .then(res => alert(res))
         .catch(error => alert(error))
-
+        dispatch(resetPokemons())
     }
 
 
@@ -89,7 +66,7 @@ const Form = () => {
         return (
             <div>
                 <button type="submit" disabled={true} >Enviar</button>
-                <p>Los campos Nombre, Tipo, Vida, Ataque y Defensa son obligatorios</p>
+                <p>*Los campos Nombre, Tipo, Vida, Ataque y Defensa son obligatorios</p>
             </div>
      )
 
@@ -120,7 +97,9 @@ const Form = () => {
 
             <div>
                 <label>imagen</label>
-                <input type="text" value={form.imagen} onChange={changeHandler}name="imagen"/>
+                <input type="number" value={form.imagen} onChange={changeHandler}name="imagen"/>
+                {errors.imagen && <span>{errors.imagen}</span> } 
+
             </div>
 
             <div>
@@ -144,17 +123,27 @@ const Form = () => {
             <div>
                 <label>velocidad</label>
                 <input type="number" value={form.velocidad} onChange={changeHandler}name="velocidad"/>
+                {errors.velocidad && <span>{errors.velocidad}</span> } 
+
             </div>
             <div>
                 <label>altura</label>
                 <input type="number" value={form.altura} onChange={changeHandler}name="altura"/>
+                {errors.altura && <span>{errors.altura}</span> } 
+
             </div>
             <div>
                 <label>peso</label>
                 <input type="number" value={form.peso} onChange={changeHandler}name="peso"/>
+                {errors.peso && <span>{errors.peso}</span> } 
+
             </div>
 
-            {form.tipo.length && form.tipo.map(tipo => {
+            {form.nombre && form.tipo.length >= 1 && form.vida && form.ataque && form.defensa && (Object.keys(errors).length === 0)
+            ? <button type="submit" disabled={false}>Enviar</button> 
+            : buttonDisabled()}
+
+            {form.tipo.length >= 1 && form.tipo.map(tipo => {
                 return(
                     <div key={tipo}>
                         <button onClick={() => closeType(tipo)}>X</button>
@@ -163,9 +152,7 @@ const Form = () => {
                 )
             })}
             
-            {form.nombre && form.tipo && form.vida && form.ataque && form.defensa
-            ? <button type="submit" disabled={false}>Enviar</button> 
-            : buttonDisabled()}
+          
            
         </form>
     )

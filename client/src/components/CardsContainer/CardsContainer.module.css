@@ -1,7 +1,47 @@
 .container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    border: 1px solid black;
-    gap: 1em;
+  display: flex;
+  flex-direction: column;  
+  flex-wrap: wrap;
+
 }
+.container_nav_search{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  gap: 4px
+}
+
+.container_cards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.first_order{
+  margin-left: 60px;
+}
+
+select {
+  width: 11%;
+  max-width: 190px;
+  background: rgba(255, 255, 255, 0.322);
+  display: flex;
+  align-items: center;
+  border-radius: 60px;
+  padding: 5px 20px;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+select option {
+  color: black;
+  background-color: rgb(255, 255, 255);
+}
+
+

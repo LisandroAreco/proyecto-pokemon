@@ -1,0 +1,32 @@
+.search_bar {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.322);
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+    padding: 5px 20px;
+}
+
+.search_bar input {
+    background: transparent;
+    flex: 3;
+    border: 0;
+    outline: none;
+    padding: 5px 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff
+}
+
+.search_bar button img {
+    width: 10px;
+}
+.search_bar button {
+    border: 0;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background: #ffffff;
+    cursor: pointer;
+}

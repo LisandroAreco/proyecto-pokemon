@@ -4,9 +4,9 @@ const Card = (props) => {
 
     return(
         <div className={style.container} >
-            <img src={props.imagen} alt={props.nombre} />
+            <img className={style.img} src={props.imagen} alt={props.nombre} />
             <p>Nombre: {props.nombre}</p>
-            <p>Tipo: {props.tipo}</p>
+            <p>Tipo: {props.tipo?.join(" ")}</p>
         </div>
     )
 }

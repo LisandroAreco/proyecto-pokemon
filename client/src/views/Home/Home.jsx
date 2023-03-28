@@ -1,19 +1,12 @@
 import CardsContainer from "../../components/CardsContainer/CardsContainer"
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { getPokemons, getTypes } from "../../redux/actions"
-
+/* import SearchBar from "../../components/SearchBar/SearchBar"*/
+import style from "./Home.module.css"
 
 const Home =  () => {
-    const dispatch = useDispatch()
-    // para montar useo useEffect() y el useDispatch() para despachar la action 
-    useEffect(() => {
-        dispatch(getTypes())
-        dispatch(getPokemons())
-    }, [dispatch])
-    return(
-        
-        <div>
+
+    return(   
+        <div className={style.contenedor}>
+            {/* <SearchBar/> */}
             <CardsContainer/>
         </div>
     )

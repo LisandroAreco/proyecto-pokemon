@@ -2,13 +2,11 @@ const { Pokemon, Type } = require('../db')
 const axios = require('axios')
 
 
-const createPokemon = async (nombre, vida, ataque, defensa, velocidad, altura, peso, tipo) =>{ 
-        let randomNum = Math.ceil((Math.random() * 800) + 1)
-        let imagenRandom = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${randomNum}.png`
+const createPokemon = async (nombre, vida, imagen, ataque, defensa, velocidad, altura, peso, tipo) =>{ 
+        let imagenRandom = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${imagen}.svg`
         let newPokemon = await Pokemon.create({nombre: nombre.toLowerCase(), imagen: imagenRandom, vida, ataque, defensa, velocidad, altura, peso})
         let similitudes = await Type.findAll({ where: { nombre: tipo}})
         //Relacion de tipos en trabla intermedia
-        //newPokemon.setTypes(tipo)
         newPokemon.addType(similitudes)
 
         return newPokemon
@@ -29,7 +27,7 @@ const getAllApiPokemons = async () => {
             return({
                 id: poke.data.id,
                 nombre: poke.data.name,
-                imagen: poke.data.sprites.other.home.front_default,
+                imagen: poke.data.sprites.other.dream_world.front_default,
                 vida: poke.data.stats[0].base_stat,
                 ataque: poke.data.stats[1].base_stat,
                 defensa: poke.data.stats[2].base_stat,
@@ -96,7 +94,7 @@ const getPokemonById = async (id) => {
             return {
                 id: poke.data.id,
                 nombre: poke.data.name,
-                imagen: poke.data.sprites.other.home.front_default,
+                imagen: poke.data.sprites.other.dream_world.front_default,
                 vida: poke.data.stats[0].base_stat,
                 ataque: poke.data.stats[1].base_stat,
                 defensa: poke.data.stats[2].base_stat,
@@ -124,7 +122,7 @@ const getApiPokemonByName = async (nombre) => {
         return {
             id: poke.data.id,
             nombre: poke.data.name,
-            imagen: poke.data.sprites.other.home.front_default,
+            imagen: poke.data.sprites.other.dream_world.front_default,
             vida: poke.data.stats[0].base_stat,
             ataque: poke.data.stats[1].base_stat,
             defensa: poke.data.stats[2].base_stat,
