@@ -17,21 +17,24 @@ const Detail = () => {
         }
     },[dispatch, id])
     const pokemon = useSelector(state => state.details)
-    console.log(pokemon);
-    let tipos = "tipos"
-    return(
 
-        <div className={style.pokemon_card} key={pokemon.id}>
-            <p>id: {pokemon.id}</p>
-            <p>nombre: {pokemon.nombre}</p>
-            <img src={pokemon.imagen} alt={pokemon.nombre} />
-            <p>vida: {pokemon.vida}</p>
-            <p>ataque: {pokemon.ataque}</p>
-            <p>defensa: {pokemon.defensa}</p>
-            {pokemon.velocidad && <p>velocidad: {pokemon.velocidad}</p>}
-            {pokemon.altura && <p>altura: {pokemon.altura}</p>}
-            {pokemon.peso && <p>peso: {pokemon.peso}</p>}
-            {(pokemon.tipo && <p>tipo: {pokemon.tipo?.join(" ")}</p>) || <p>tipo: {pokemon.types?.map(tipo => (tipo.nombre + " " ))}</p>}
+
+    return(
+        <div className={style.container}>
+            <div className={style.pokemon_card} key={pokemon.id}>
+                <p>ID: {pokemon.id}</p>
+                <p className={style.nombre}>{pokemon.nombre}</p>
+                <img src={pokemon.imagen} alt={pokemon.nombre} />
+                <div className={style.properties_container}>
+                    <p>Vida: {pokemon.vida}</p>
+                    <p>Ataque: {pokemon.ataque}</p>
+                    <p>Defensa: {pokemon.defensa}</p>
+                    {pokemon.velocidad && <p>Velocidad: {pokemon.velocidad}</p>}
+                    {pokemon.altura && <p>Altura: {pokemon.altura}</p>}
+                    {pokemon.peso && <p>Peso: {pokemon.peso}</p>}
+                    {(pokemon.tipo && <p>Tipo: {pokemon.tipo?.join(" ")}</p>) || <p>tipo: {pokemon.types?.map(tipo => (tipo.nombre + " " ))}</p>}
+                </div>
+            </div>
         </div>
     )
 

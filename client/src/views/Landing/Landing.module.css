@@ -2,7 +2,7 @@
 .container {
     box-sizing: border-box;
     background-image: url("./landingImage.svg");
-    background-color: #ff9f00;
+    background-color: #F05D59;
     background-size: 50%;
     background-attachment:fixed;
     background-position:center center;
@@ -12,15 +12,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: end;
-    border-bottom:2em solid  #ad000069;
+    border-bottom:2em solid  #ffcb05;
     
 }
 .button_start {
     font-family: "" ;
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: #655619;
     background-color: #ffcb05 ;
-    padding: 10px 10px;
+    padding: 6px 10px;
     cursor: pointer;
     transition: all 0.2s ;
     width: 7em;

@@ -5,7 +5,7 @@ const Card = (props) => {
     return(
         <div className={style.container} >
             <img className={style.img} src={props.imagen} alt={props.nombre} />
-            <p>Nombre: {props.nombre}</p>
+            <p>{props.nombre}</p>
             <p>Tipo: {props.tipo?.join(" ")}</p>
         </div>
     )

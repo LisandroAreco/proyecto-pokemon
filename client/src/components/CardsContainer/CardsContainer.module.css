@@ -44,4 +44,37 @@ select option {
   background-color: rgb(255, 255, 255);
 }
 
+.container_gifs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  animation:  move-up 5s forwards ; 
+}
 
+@keyframes move-up {
+  from {
+    transform: translateY(+75%); /* Posición inicial */
+  }
+  to {
+    transform: translateY(-25%); /* Posición final, traslada hacia arriba el 50% de la altura del contenedor */
+  }
+}
+
+.charizard {
+  height: 90vh;
+  margin-bottom: -70px;
+
+}
+
+.loading {
+  height: 30vh;
+  margin-right: 100px;
+}
+
+.no_pokemons {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}

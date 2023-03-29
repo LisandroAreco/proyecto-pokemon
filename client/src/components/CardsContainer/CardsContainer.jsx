@@ -109,10 +109,13 @@ const CardsContainer = () => {
                 />
             </div>
             
-            {!pokemons.length && <div><img src={Charizard} alt={"charizard"}/> <img src={Loading} alt={"charizard"}/></div>}
+            {!pokemons.length && 
+                <div className={style.container_gifs}>
+                    <img src={Charizard} className={style.charizard} alt={"charizard"}/> <img src={Loading} className={style.loading} alt={"charizard"}/>
+                </div>}
 
             {(typeof pokemons[0] === "string")
-            ? <h1>No se encontraron pokemons</h1>
+            ? <div className={style.no_pokemons}><h1>{pokemons[0]}</h1></div>
             : 
             <div className={style.container_cards}> 
             {currentPokemons?.map(poke =>{ 
