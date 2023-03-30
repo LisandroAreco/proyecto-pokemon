@@ -162,9 +162,8 @@ const getAllPokemonByName = async (nombre) => {
 
       return allPokemons   
     }else {
-        // const msj ="No se encontró ningun Pokemon con ese nombre"
-        // return msj
-        throw  Error 
+        return [`No se encontraron pokemons con el nombre ${nombre}`]
+        
     }
 }
 

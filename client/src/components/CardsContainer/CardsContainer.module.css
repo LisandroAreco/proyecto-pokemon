@@ -24,7 +24,7 @@
 }
 
 select {
-  width: 11%;
+  width: 14%;
   max-width: 190px;
   background: rgba(255, 255, 255, 0.322);
   display: flex;
@@ -51,6 +51,8 @@ select option {
   align-items: center;
   z-index: 2;
   animation:  move-up 5s forwards ; 
+  pointer-events: none;
+
 }
 
 @keyframes move-up {
@@ -65,7 +67,6 @@ select option {
 .charizard {
   height: 90vh;
   margin-bottom: -70px;
-
 }
 
 .loading {
@@ -77,4 +78,9 @@ select option {
   height: 100vh;
   display: flex;
   justify-content: center;
+}
+.no_pokemons h3 {
+  color: white;
+  text-shadow: 1px 1px 5px black;
+
 }

@@ -30,9 +30,10 @@ const rootReducer = (state = initialState , action) => {
             !filteredByType.length && (filteredByType =   ["no hay pokemones de ese tipo"] ) 
             return {...state, pokemons: filteredByType}     
         case FILTER_BY_CREATED:
-            let filterByCreated = action.payload === "todos"
-            ? allPokemons 
-            : allPokemons.filter(poke => poke.created === action.payload)
+            let filterByCreated = []
+            if(action.payload === "todos") filterByCreated =  allPokemons
+            if(action.payload === "true")filterByCreated = allPokemons.filter(poke => poke.created === action.payload)
+            if(action.payload === "false")filterByCreated = allPokemons.filter(poke => poke.created === action.payload)
 
             return{...state, pokemons: filterByCreated}
         case ORDER_BY_ID: 

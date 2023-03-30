@@ -29,9 +29,14 @@ export const getPokemon =  (id) => {
 }
 export const getPokemonByName =  (nombre) => {
     return async function (dispatch) {
-        const pokemons = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`)
-        let pokemon = pokemons.data
-        dispatch({type:GET_POKEMON_BY_NAME, payload:pokemon})
+        try{
+            const pokemons = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`)
+            let pokemon = pokemons.data
+            dispatch({type:GET_POKEMON_BY_NAME, payload:pokemon})
+        }
+        catch(error){
+            alert(error.message)
+        }
     };
 }
 
@@ -55,6 +60,7 @@ export const filterByType = (type) => {
 }
 
 export const filterByCreated = (boolean) => {
+    console.log(boolean);
     return({type: FILTER_BY_CREATED, payload: boolean})
 }
 

@@ -13,7 +13,7 @@ const getPokemonsHandler = async (req,res) => {
             
             res.status(200).json(allPokemonsByName)
         }catch (error) {
-            res.status(400).json(`El nombre: ${nombre} no corresponde a ningún pokemón`)
+            res.status(400).json(error.message)
 
         }
     }

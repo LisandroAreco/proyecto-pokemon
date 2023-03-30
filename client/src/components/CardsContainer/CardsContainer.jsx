@@ -45,7 +45,7 @@ const CardsContainer = () => {
     const typeFilterHandler = (e) => {
         dispatch (filterByType(e.target.value))
     }
-    const createdFilterHandler = e => {
+    const createdFilterHandler = async e => {
         dispatch(filterByCreated(e.target.value))
     }
     const orderHandler = (e) => {
@@ -112,20 +112,21 @@ const CardsContainer = () => {
             {!pokemons.length && 
                 <div className={style.container_gifs}>
                     <img src={Charizard} className={style.charizard} alt={"charizard"}/> <img src={Loading} className={style.loading} alt={"charizard"}/>
-                </div>}
+                </div>
+            }
 
             {(typeof pokemons[0] === "string")
-            ? <div className={style.no_pokemons}><h1>{pokemons[0]}</h1></div>
+            ? <div className={style.no_pokemons}><h3>{pokemons[0]}</h3></div>
             : 
             <div className={style.container_cards}> 
             {currentPokemons?.map(poke =>{ 
                 return (
                 <Link  key={poke.id} to={`/detail/${poke.id}`}> 
                     <Card
-                    key={poke.id}  
-                    nombre={poke.nombre}
-                    imagen={poke.imagen}
-                    tipo={poke.tipo}                    
+                        key={poke.id}  
+                        nombre={poke.nombre}
+                        imagen={poke.imagen}
+                        tipo={poke.tipo}
                     />
                 </Link>)
             })}

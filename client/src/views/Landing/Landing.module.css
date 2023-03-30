@@ -16,7 +16,6 @@
     
 }
 .button_start {
-    font-family: "" ;
     font-size: 1.2em;
     color: #655619;
     background-color: #ffcb05 ;
@@ -33,7 +32,7 @@
   
   .button_start:hover {
   transform: scale(1.05);
-  box-shadow: 3px 5px 5px #7d7d0579;
+  box-shadow: 3px 5px 5px #00000079;
  } 
   .button_start:hover + img {
   transform: scale(1.015);
