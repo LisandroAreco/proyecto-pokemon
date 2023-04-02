@@ -35,8 +35,7 @@ const getPokemonHandlerId = async (req,res) => {
         res.status(200).json(pokemonById)
     }catch(error) {
         res.status(400).json(`El id: ${idPokemon} no corresponde a ningún pokemón`)
-    }
-    
+    }    
 }
 
 

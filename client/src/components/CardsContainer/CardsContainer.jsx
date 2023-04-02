@@ -22,6 +22,8 @@ const CardsContainer = () => {
     const [currentPage,setCurrentPage] = useState(1)
     const [render, setRender] = useState(0)
     const [pokemonsPerPage, setpokemonsPerPage] = useState(12)
+    // const [typeState, setTypeState] = useState("todos")
+
     const indexOfLastpokemon = currentPage * pokemonsPerPage
     const indexOfFirstpokemon = indexOfLastpokemon - pokemonsPerPage
     
@@ -43,10 +45,15 @@ const CardsContainer = () => {
     }
     
     const typeFilterHandler = (e) => {
+        setCurrentPage(1)
+        // setTypeState(e.target.value)
         dispatch (filterByType(e.target.value))
     }
     const createdFilterHandler = async e => {
+        // hacer funcion para que filtro de tipos se vuelva a todos al cambiar entre db y preexistes
+
         dispatch(filterByCreated(e.target.value))
+        // setTypeState("todos")
     }
     const orderHandler = (e) => {
         if(e.target.value === "asc") {
@@ -72,7 +79,7 @@ const CardsContainer = () => {
         <div className={style.container}>
             <div className={style.container_nav_search}>
                     <div className={style.search_bar}>
-                        <SearchBar />
+                        <SearchBar  setCurrentPage={setCurrentPage}/>
                     </div>
                     <select className={style.first_order} onChange={e => orderHandler(e)}>
                         <option value="todos">Ordenar por</option>                    
@@ -82,7 +89,7 @@ const CardsContainer = () => {
                         <option value="descAtt">Ataque descendente</option>
                     </select>
 
-                    <select onChange={e => typeFilterHandler(e)}>
+                    <select className="no" onChange={e => typeFilterHandler(e)}>
                         {/* <label>Type order</label> */}
                         <option value="todos">todos</option>
                         {types.map(type => {
@@ -93,7 +100,7 @@ const CardsContainer = () => {
                         
                     </select>
 
-                    <select onChange={e => createdFilterHandler(e)}>
+                    <select className="si" onChange={e => createdFilterHandler(e)}>
                         <option value="todos">todos</option>
                         <option value="true">creados</option>
                         <option value="false">preexistentes</option>
@@ -106,6 +113,8 @@ const CardsContainer = () => {
                     pokemonsPerPage = {pokemonsPerPage}
                     pokemons = {pokemons.length}
                     paginado = {paginado}
+                    setcurrentPage = {setCurrentPage}
+                    currentPage = {currentPage}
                 />
             </div>
             
@@ -114,23 +123,23 @@ const CardsContainer = () => {
                     <img src={Charizard} className={style.charizard} alt={"charizard"}/> <img src={Loading} className={style.loading} alt={"charizard"}/>
                 </div>
             }
-
+            {/* renderiza Card o mensaje de error */}
             {(typeof pokemons[0] === "string")
-            ? <div className={style.no_pokemons}><h3>{pokemons[0]}</h3></div>
-            : 
-            <div className={style.container_cards}> 
-            {currentPokemons?.map(poke =>{ 
-                return (
-                <Link  key={poke.id} to={`/detail/${poke.id}`}> 
-                    <Card
-                        key={poke.id}  
-                        nombre={poke.nombre}
-                        imagen={poke.imagen}
-                        tipo={poke.tipo}
-                    />
-                </Link>)
-            })}
-            </div>
+                ? <div className={style.no_pokemons}><h3>{pokemons[0]}</h3></div>
+                : 
+                <div className={style.container_cards}> 
+                {currentPokemons?.map(poke =>{ 
+                    return (
+                    <Link  key={poke.id} to={`/detail/${poke.id}`}> 
+                        <Card
+                            key={poke.id}  
+                            nombre={poke.nombre}
+                            imagen={poke.imagen}
+                            tipo={poke.tipo}  
+                        />
+                    </Link>)
+                })}
+                </div>
             }
         </div>
     )

@@ -4,7 +4,7 @@ import { getPokemonByName } from "../../redux/actions"
 import style from "./SearchBar.module.css"
 import img from "./search.png"
 
-const SearchBar = () => {
+const SearchBar = ({setCurrentPage}) => {
     const [pokemon, setPokemon] = useState("")
     const dispatch = useDispatch()
 
@@ -15,6 +15,7 @@ const SearchBar = () => {
     const handleClick = () => {
         dispatch(getPokemonByName(pokemon))
         setPokemon("")
+        setCurrentPage(1)
     }
 
     return(

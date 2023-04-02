@@ -8,10 +8,8 @@ const createPokemon = async (nombre, vida, imagen, ataque, defensa, velocidad, a
         let similitudes = await Type.findAll({ where: { nombre: tipo}})
         //Relacion de tipos en trabla intermedia
         newPokemon.addType(similitudes)
-
         return newPokemon
 }
-
 
 
 const getAllApiPokemons = async () => {
@@ -43,7 +41,7 @@ const getAllApiPokemons = async () => {
     }
 
 const getAllDbPokemons = async () => {
-      let pokes =  await Pokemon.findAll({
+    let pokes =  await Pokemon.findAll({
         include: {
             model: Type,
             attributes: ['nombre'],
@@ -84,7 +82,7 @@ const getPokemonById = async (id) => {
               through: { attributes: []} 
             }
           })
-  
+          console.log(await poke);
         // const poke = await Pokemon.findOne({ where: { id: id } });
         return poke  
     }else {
@@ -106,7 +104,7 @@ const getPokemonById = async (id) => {
             }
         })
         .catch(error=> {
-            return {error: error.message}
+            return {error: "No se encontró pokemon con ese id"}
         } )
         
         return poke

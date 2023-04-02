@@ -23,7 +23,7 @@ const Form = () => {
         velocidad: "", //(si tiene).
         altura: "", //(si tiene).
         peso: "",
-        tipo:"" //(si tiene).
+        tipo:"", //(si tiene).
         // posibilidad de seleccionar/agregar varios tipos en simultáneo.
         // botón para crear el nuevo pokemon.
     })
@@ -143,7 +143,6 @@ const Form = () => {
                     <label>Peso:</label>
                     <input type="number" value={form.peso} onChange={changeHandler}name="peso"/>
                     {errors.peso && <span>{errors.peso}</span> } 
-
                 </div>
 
                 {form.nombre && form.tipo.length >= 1 && form.vida && form.ataque && form.defensa && (Object.keys(errors).length === 0)
