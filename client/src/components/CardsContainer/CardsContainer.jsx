@@ -4,7 +4,7 @@ import Paginado from "../Paginado/Paginado"
 import style from "./CardsContainer.module.css"
 import Charizard from "./Charizard.gif"
 import Loading from "./loading.gif"
-import { filterByType, filterByCreated, orderById, orderByAttack } from "../../redux/actions"
+import { filterByType, filterByCreated, orderById, orderByAttack, resetFilters, filterByPower } from "../../redux/actions"
 import { getPokemons, getTypes } from "../../redux/actions"
 
 
@@ -16,18 +16,20 @@ import { useEffect, useState } from "react"
 const CardsContainer = () => {
 
 
-    const pokemons = useSelector(state=> state.pokemons)
+    let pokemons = useSelector(state=> state.pokemons)
     const types = useSelector(state=> state.types)
+    const error = useSelector(state=> state.error)
 
     const [currentPage,setCurrentPage] = useState(1)
     const [render, setRender] = useState(0)
     const [pokemonsPerPage, setpokemonsPerPage] = useState(12)
-    // const [typeState, setTypeState] = useState("todos")
+    const [typeReset, setTypeReset] = useState("")
+    const [createdReset, setCreatedReset] = useState("")
 
     const indexOfLastpokemon = currentPage * pokemonsPerPage
     const indexOfFirstpokemon = indexOfLastpokemon - pokemonsPerPage
     
-    const currentPokemons = pokemons?.slice(indexOfFirstpokemon, indexOfLastpokemon)
+    let currentPokemons = pokemons?.slice(indexOfFirstpokemon, indexOfLastpokemon)
     
     const dispatch = useDispatch()
     useEffect(() => {
@@ -46,15 +48,23 @@ const CardsContainer = () => {
     
     const typeFilterHandler = (e) => {
         setCurrentPage(1)
-        // setTypeState(e.target.value)
+        setTypeReset(e.target.value)
         dispatch (filterByType(e.target.value))
     }
     const createdFilterHandler = async e => {
-        // hacer funcion para que filtro de tipos se vuelva a todos al cambiar entre db y preexistes
-
         dispatch(filterByCreated(e.target.value))
-        // setTypeState("todos")
+        setTypeReset("todos")
+        setCreatedReset(e.target.value)
+        setCurrentPage(1)
     }
+
+    const resetFilterHandler = () => {
+        dispatch(resetFilters())
+        setCurrentPage(1)
+        setCreatedReset("todos")
+        setTypeReset("todos")
+    }
+
     const orderHandler = (e) => {
         if(e.target.value === "asc") {
             dispatch(orderById(e.target.value))
@@ -79,7 +89,7 @@ const CardsContainer = () => {
         <div className={style.container}>
             <div className={style.container_nav_search}>
                     <div className={style.search_bar}>
-                        <SearchBar  setCurrentPage={setCurrentPage}/>
+                        <SearchBar  setCurrentPage={setCurrentPage} setCreatedReset={setCreatedReset} setTypeReset={setTypeReset}/>
                     </div>
                     <select className={style.first_order} onChange={e => orderHandler(e)}>
                         <option value="todos">Ordenar por</option>                    
@@ -89,25 +99,27 @@ const CardsContainer = () => {
                         <option value="descAtt">Ataque descendente</option>
                     </select>
 
-                    <select className="no" onChange={e => typeFilterHandler(e)}>
+                    <select value={typeReset} className="no" onChange={e => typeFilterHandler(e)}>
                         {/* <label>Type order</label> */}
                         <option value="todos">todos</option>
                         {types.map(type => {
                             return (
                                 <option key={type.id} value={type.nombre}>{type.nombre}</option>
                             )
-                        })}
-                        
+                        })}    
                     </select>
 
-                    <select className="si" onChange={e => createdFilterHandler(e)}>
+                    <select value={createdReset} className="si" onChange={e => createdFilterHandler(e)}>
                         <option value="todos">todos</option>
                         <option value="true">creados</option>
                         <option value="false">preexistentes</option>
                     </select>
-                    
-              
+                    <button className={style.button_reset} onClick={() => resetFilterHandler()}>Reset</button>
             </div>
+            {error && error
+            ? <div className={style.no_pokemons}><h3>{error}</h3></div>
+            :
+            <>
             <div>
                 <Paginado
                     pokemonsPerPage = {pokemonsPerPage}
@@ -123,10 +135,9 @@ const CardsContainer = () => {
                     <img src={Charizard} className={style.charizard} alt={"charizard"}/> <img src={Loading} className={style.loading} alt={"charizard"}/>
                 </div>
             }
-            {/* renderiza Card o mensaje de error */}
-            {(typeof pokemons[0] === "string")
-                ? <div className={style.no_pokemons}><h3>{pokemons[0]}</h3></div>
-                : 
+            {   /* error
+                ? <div className={style.no_pokemons}><h3>{error}</h3></div>
+                :  */
                 <div className={style.container_cards}> 
                 {currentPokemons?.map(poke =>{ 
                     return (
@@ -141,6 +152,7 @@ const CardsContainer = () => {
                 })}
                 </div>
             }
+            </>}
         </div>
     )
 }

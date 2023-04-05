@@ -17,10 +17,12 @@ const Detail = () => {
         }
     },[dispatch, id])
     const pokemon = useSelector(state => state.details)
-
-
-    return(
+    const error = useSelector(state => state.error)
+    
+    return (
         <div className={style.container}>
+            {Object.keys(pokemon).length
+            ? 
             <div className={style.pokemon_card} key={pokemon.id}>
                 <p>ID: {pokemon.id}</p>
                 <p className={style.nombre}>{pokemon.nombre}</p>
@@ -35,6 +37,8 @@ const Detail = () => {
                     {(pokemon.tipo && <p>Tipo: {pokemon.tipo?.join(" ")}</p>) || <p>tipo: {pokemon.types?.map(tipo => (tipo.nombre + " " ))}</p>}
                 </div>
             </div>
+            : <h1>{error}</h1>
+            }   
         </div>
     )
 

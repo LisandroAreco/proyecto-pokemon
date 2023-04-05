@@ -3,19 +3,23 @@ const axios = require('axios')
 
 
 const createPokemon = async (nombre, vida, imagen, ataque, defensa, velocidad, altura, peso, tipo) =>{ 
+    try{
         let imagenRandom = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${imagen}.svg`
         let newPokemon = await Pokemon.create({nombre: nombre.toLowerCase(), imagen: imagenRandom, vida, ataque, defensa, velocidad, altura, peso})
         let similitudes = await Type.findAll({ where: { nombre: tipo}})
         //Relacion de tipos en trabla intermedia
         newPokemon.addType(similitudes)
         return newPokemon
+    }catch{
+        throw new Error(`No se ha podido crear a ${nombre}`)
+    }
 }
 
 
 const getAllApiPokemons = async () => {
         let i = 1
         let pokemons = [] 
-        while(i < 151){
+        while(i < 40){
             let dataApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
             pokemons.push(dataApi)
             i++
@@ -75,20 +79,22 @@ const getDbApiPokemons = async () => {
 
 const getPokemonById = async (id) => {
     if(isNaN(id)) {
-        const poke = await Pokemon.findByPk(id,  {
-            include: {
-              model: Type, 
-              attributes: ['nombre'],
-              through: { attributes: []} 
-            }
-          })
-          console.log(await poke);
-        // const poke = await Pokemon.findOne({ where: { id: id } });
-        return poke  
+        try{
+            const poke = await Pokemon.findByPk(id,  {
+                include: {
+                  model: Type, 
+                  attributes: ['nombre'],
+                  through: { attributes: []} 
+                }
+              })
+            return poke 
+        }catch(error){
+            throw new Error(`No existe el pokemon con ID: ${id}`)
+        }
+  
     }else {
-
-        const poke = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-        .then(poke =>  {
+        try{
+            const poke = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
             return {
                 id: poke.data.id,
                 nombre: poke.data.name,
@@ -102,15 +108,11 @@ const getPokemonById = async (id) => {
                 tipo: poke.data.types.map(ty => ty.type.name),
                 created: false
             }
-        })
-        .catch(error=> {
-            return {error: "No se encontró pokemon con ese id"}
-        } )
-        
-        return poke
+        }
+        catch(error){
+            throw new Error (`No existe el pokemon con ID: ${id}`)
+        }
     }
-    
-
 }
 
 const getApiPokemonByName = async (nombre) => {
@@ -160,7 +162,7 @@ const getAllPokemonByName = async (nombre) => {
 
       return allPokemons   
     }else {
-        return [`No se encontraron pokemons con el nombre ${nombre}`]
+        throw new Error([`No se encontraron pokemons con el nombre ${nombre}`]) 
         
     }
 }

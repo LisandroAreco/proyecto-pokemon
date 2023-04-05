@@ -14,7 +14,7 @@ const Paginado = ({pokemonsPerPage, pokemons, paginado, currentPage, setCurrentP
             <ul className={style.container_list}>
                 {currentPage === 1
                 ?   <li>
-                        <button disabled="true"> &lt; </button>
+                        <button disabled={true}> &lt; </button>
                     </li>
                 :   <li>
                         <button  onClick={() => paginado(currentPage - 1)}> &lt;</button>
@@ -28,7 +28,7 @@ const Paginado = ({pokemonsPerPage, pokemons, paginado, currentPage, setCurrentP
 
                 {currentPage === Math.ceil(pokemons / pokemonsPerPage)
                 ?   <li>
-                        <button disabled="true" >&gt;</button>
+                        <button disabled={true} >&gt;</button>
                     </li>
                 :   <li>
                         <button  onClick={() => paginado(currentPage + 1)}>&gt;</button>

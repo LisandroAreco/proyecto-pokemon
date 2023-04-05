@@ -3,11 +3,12 @@ import style from "./NavBar.module.css"
 import logo from "./logo.png"
 import create from "./create.png"
 import { useDispatch } from "react-redux"
-import { getPokemons, resetPokemons } from "../../redux/actions"
+import { getPokemons, resetPokemons, resetError } from "../../redux/actions"
 
 const NavBar = () => {
     const dispatch = useDispatch()
     const clickHandler = () => {
+        dispatch(resetError())
         dispatch(resetPokemons())
         dispatch(getPokemons())    
     }

@@ -16,16 +16,15 @@ const Form = () => {
 
     const [form, setForm] = useState({
         nombre: "",
+        tipo: [],
         imagen: "",
         vida: "",
         ataque: "",
         defensa: "",
-        velocidad: "", //(si tiene).
-        altura: "", //(si tiene).
+        velocidad: "", 
+        altura: "", 
         peso: "",
-        tipo:"", //(si tiene).
-        // posibilidad de seleccionar/agregar varios tipos en simultáneo.
-        // botón para crear el nuevo pokemon.
+        tipo:""
     })
 
     const [errors, setErrors] = useState( {} )
@@ -34,14 +33,14 @@ const Form = () => {
         const targetProp = event.target.name
         const valueProp = event.target.value
 
-        // validate({...form, [targetProp]: valueProp})
         setErrors(validate({...form, [targetProp]: valueProp}))
         setForm({...form, [targetProp]: valueProp})
     }
     const changeHandlerTipo = (event) =>{
         const valueProp = event.target.value
-        if(form.tipo.includes(valueProp)) return   
-        else {validate({...form, tipo: [...form.tipo, valueProp]})
+        if(form.tipo.includes(valueProp)) return
+        if(form.tipo.length >= 4) return   
+        else {setErrors(validate({...form, tipo: [...form.tipo, valueProp]}))
             setForm({...form, tipo: [...form.tipo, valueProp]})}
     }
     
@@ -58,11 +57,21 @@ const Form = () => {
         event.preventDefault()
         try {
             const response = await axios.post(`http://localhost:3001/pokemons`, formToSend);
-            console.log(response.data);
-            alert("Se ha creado correctamente el pokemon " + response.data.nombre) // aquí puedes acceder a la respuesta del backend
+            alert(`El pokemon ${response.data.nombre} se ha creado correctamente!`) // aquí puedes acceder a la respuesta del backend
             dispatch(resetPokemons());
+            setForm({
+                nombre: "",
+                tipo: [],
+                imagen: "",
+                vida: "",
+                ataque: "",
+                defensa: "",
+                velocidad: "", 
+                altura: "", 
+                peso: "",
+                tipo:""
+            })
           } catch (error) {
-            console.error(error); // manejo de errores
             alert(error.message);
           }
     }
@@ -79,7 +88,8 @@ const Form = () => {
     }
 
     const closeType = (tipo) => {
-         setForm({...form, tipo: form.tipo.filter(type => type !== tipo)})
+        setErrors(validate({...form, tipo: form.tipo.filter(type => type !== tipo)}))
+        setForm({...form, tipo: form.tipo.filter(type => type !== tipo)})
      }
      return(
         <div className={style.container}>

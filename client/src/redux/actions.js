@@ -11,21 +11,32 @@ export const FILTER_BY_CREATED = "FILTER_BY_CREATED"
 export const ORDER_BY_ID = "ORDER_BY_ID"
 export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK"
 export const RESET_POKEMONS = "RESET_POKEMONS"
+export const RESET_FILTERS = "RESET_FILTERS"
+export const ERRORS = "ERRORS"
 
 export const getPokemons =  () => {
     return async function (dispatch) {
-        const pokemons = await axios.get(`http://localhost:3001/pokemons`)
-        let allPokemons = pokemons.data
-        dispatch({type:GET_POKEMONS, payload:allPokemons})
+        try{
+            const pokemons = await axios.get(`http://localhost:3001/pokemons`)
+            let allPokemons = pokemons.data
+            dispatch({type:GET_POKEMONS, payload:allPokemons})
+        }catch(error){
+            dispatch({type: ERRORS, payload: error.response.data})
+        }
     };
 }
 
 export const getPokemon =  (id) => {
     return async function (dispatch) {
-        const pokemons = await axios.get(`http://localhost:3001/pokemons/${id}`)
-        let pokemon = pokemons.data
-        dispatch({type:GET_POKEMON, payload:pokemon})
+        try{
+            const pokemons = await axios.get(`http://localhost:3001/pokemons/${id}`)
+            let pokemon = pokemons.data
+            dispatch({type:GET_POKEMON, payload:pokemon})
+        }catch(error){
+            dispatch({type: ERRORS, payload: error.response.data})
+        }
     };
+
 }
 export const getPokemonByName =  (nombre) => {
     return async function (dispatch) {
@@ -35,7 +46,7 @@ export const getPokemonByName =  (nombre) => {
             dispatch({type:GET_POKEMON_BY_NAME, payload:pokemon})
         }
         catch(error){
-            alert(error.message)
+            dispatch({type: ERRORS, payload: error.response.data})
         }
     };
 }
@@ -72,9 +83,14 @@ export const orderById = (order) => {
 
 export const orderByAttack = (order) => {
     return({type: ORDER_BY_ATTACK, payload:order})
-
 }
 
 export const resetPokemons = () =>{
     return({type: RESET_POKEMONS, payload: []})
+}
+export const resetError = () =>{
+    return({type: ERRORS, payload: ""})
+}
+export const resetFilters = () => {
+    return({type: RESET_FILTERS})
 }

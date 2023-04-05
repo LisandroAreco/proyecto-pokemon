@@ -20,10 +20,10 @@ const getPokemonsHandler = async (req,res) => {
     else{ 
         try{
             const pokemons = getDbApiPokemons()
-            res.status(200).json( await pokemons)
+            res.status(200).json(await pokemons)
 
         }catch(error) {
-            res.status(400).send("Hubo un error al traer los pokemones de la Api y base de datos")
+            res.status(400).json(error.message)
     }
 }
 }
@@ -33,8 +33,8 @@ const getPokemonHandlerId = async (req,res) => {
     try{
         const pokemonById = await getPokemonById(idPokemon)
         res.status(200).json(pokemonById)
-    }catch(error) {
-        res.status(400).json(`El id: ${idPokemon} no corresponde a ningún pokemón`)
+    }catch(error){
+        res.status(400).json(error.message)
     }    
 }
 
@@ -47,7 +47,7 @@ const createPokemonHandler =async (req,res) => {
         
         res.status(200).json(newPokemon)
     }catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json(error.message)
 
     }   
 }

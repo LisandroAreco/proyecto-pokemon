@@ -19,6 +19,20 @@
   justify-content: space-evenly;
 }
 
+.button_reset{
+  border: 0;
+  border-radius: 10%;
+  width: 70px;
+  height: 40px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.button_reset:hover{
+  background: #ffcd05;
+
+}
+
 .first_order{
   margin-left: 60px;
 }
