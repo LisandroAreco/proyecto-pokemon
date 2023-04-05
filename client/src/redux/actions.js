@@ -17,7 +17,7 @@ export const ERRORS = "ERRORS"
 export const getPokemons =  () => {
     return async function (dispatch) {
         try{
-            const pokemons = await axios.get(`http://localhost:3001/pokemons`)
+            const pokemons = await axios.get(`pokemons`)
             let allPokemons = pokemons.data
             dispatch({type:GET_POKEMONS, payload:allPokemons})
         }catch(error){
@@ -29,7 +29,7 @@ export const getPokemons =  () => {
 export const getPokemon =  (id) => {
     return async function (dispatch) {
         try{
-            const pokemons = await axios.get(`http://localhost:3001/pokemons/${id}`)
+            const pokemons = await axios.get(`pokemons/${id}`)
             let pokemon = pokemons.data
             dispatch({type:GET_POKEMON, payload:pokemon})
         }catch(error){
@@ -41,7 +41,7 @@ export const getPokemon =  (id) => {
 export const getPokemonByName =  (nombre) => {
     return async function (dispatch) {
         try{
-            const pokemons = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`)
+            const pokemons = await axios.get(`pokemons?nombre=${nombre}`)
             let pokemon = pokemons.data
             dispatch({type:GET_POKEMON_BY_NAME, payload:pokemon})
         }
@@ -53,7 +53,7 @@ export const getPokemonByName =  (nombre) => {
 
 export const getTypes = () => {
     return async function (dispatch) {
-        const types = await axios.get(`http://localhost:3001/types`)
+        const types = await axios.get(`types`)
         let typesData = types.data
         dispatch({type: GET_TYPES, payload: typesData})
 
