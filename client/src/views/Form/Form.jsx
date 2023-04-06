@@ -56,7 +56,7 @@ const Form = () => {
     const submitHandler = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.post(`http://localhost:3001/pokemons`, formToSend);
+            const response = await axios.post(`/pokemons`, formToSend);
             alert(`El pokemon ${response.data.nombre} se ha creado correctamente!`) // aquí puedes acceder a la respuesta del backend
             dispatch(resetPokemons());
             setForm({
