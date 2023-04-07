@@ -114,7 +114,7 @@ const Form = () => {
 
                 <div>
                     <label>Imagen:</label>
-                    <input type="number" value={form.imagen} onChange={changeHandler}name="imagen" placeholder='Entre el 0 y 800'/>
+                    <input type="text" value={form.imagen} onChange={changeHandler}name="imagen" placeholder='Insert JPG from URL'/>
                     {errors.imagen && <span>{errors.imagen}</span> } 
 
                 </div>
