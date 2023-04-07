@@ -4,8 +4,8 @@ const axios = require('axios')
 
 const createPokemon = async (nombre, vida, imagen, ataque, defensa, velocidad, altura, peso, tipo) =>{ 
     try{
-        let imagenRandom = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${imagen}.svg`
-        let newPokemon = await Pokemon.create({nombre: nombre.toLowerCase(), imagen: imagenRandom, vida, ataque, defensa, velocidad, altura, peso})
+        // let imagenRandom = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${imagen}.svg`
+        let newPokemon = await Pokemon.create({nombre: nombre.toLowerCase(), imagen, vida, ataque, defensa, velocidad, altura, peso})
         let similitudes = await Type.findAll({ where: { nombre: tipo}})
         //Relacion de tipos en trabla intermedia
         newPokemon.addType(similitudes)
