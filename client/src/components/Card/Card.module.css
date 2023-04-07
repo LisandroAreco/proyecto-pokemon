@@ -20,10 +20,11 @@ a{
   }
   
   .img {
-    height: 200px;
+    height: auto;
     width: 200px;
     margin: 0 auto;
     display: block;
+    mix-blend-mode: color-burn;
   }
 
   
