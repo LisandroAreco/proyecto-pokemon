@@ -72,9 +72,10 @@ const getAllDbPokemons = async () => {
 
 const getDbApiPokemons = async () => {
     const apiPoke = await getAllApiPokemons()
-    const dbPoke = await getAllDbPokemons()
-    const allPokes = apiPoke.concat(dbPoke)
-    return allPokes
+    // const dbPoke = await getAllDbPokemons()
+    // const allPokes = apiPoke.concat(dbPoke)
+    // return allPokes
+    return apiPoke
 }
 
 const getPokemonById = async (id) => {
