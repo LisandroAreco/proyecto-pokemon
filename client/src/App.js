@@ -3,7 +3,7 @@ import NavBar from "./components/NavBar/NavBar"
 import { Route, useLocation } from "react-router-dom"
 import style from "./App.module.css"
 import axios from "axios"
-axios.defaults.baseURL = "https://proyecto-pokemon-six.vercel.app/"
+axios.defaults.baseURL = "https://proyecto-pokemon-production.up.railway.app/"
 function App() {
 
   let location = useLocation()
