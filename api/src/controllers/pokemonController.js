@@ -167,7 +167,6 @@ const getAllPokemonByName = async (nombre) => {
     }
 }
 
-// comentado
 
 
 

@@ -19,6 +19,7 @@ const rootReducer = (state = initialState , action) => {
         case GET_POKEMONS:
             return {...state, allPokemons: action.payload, pokemons : action.payload, filtered: action.payload, error:""}
         case GET_POKEMON:
+            console.log(typeof action.payload === 'object');
             if(typeof action.payload === "string")return {...state, error:action.payload}
             else  return {...state, details: action.payload, error:""}
 
